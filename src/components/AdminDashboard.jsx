@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import localQuestions from '../data/questions.js'
 
 export default function AdminDashboard() {
   const [questions, setQuestions] = useState([])
@@ -12,11 +13,21 @@ export default function AdminDashboard() {
       setError(null)
       try {
         const res = await fetch('/api/questions')
-        const body = await res.json()
-        if (!body.ok) throw new Error(body.error || 'Failed to load')
-        setQuestions(body.questions)
+        const ct = res.headers.get('content-type') || ''
+        if (res.ok && ct.includes('application/json')) {
+          const body = await res.json()
+          if (!body.ok) throw new Error(body.error || 'Failed to load')
+          setQuestions(body.questions)
+        } else {
+          // API not available (dev) or returned non-json — fallback to local file
+          const text = await res.text().catch(() => '')
+          setQuestions(localQuestions)
+          setError('API unavailable or returned non-JSON. Falling back to local questions. (' + (text || 'no response') + ')')
+        }
       } catch (err) {
-        setError(String(err))
+        // network error or other
+        setQuestions(localQuestions)
+        setError('Could not reach /api/questions — using local questions. ' + String(err))
       } finally {
         setLoading(false)
       }
@@ -60,13 +71,20 @@ export default function AdminDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questions }),
       })
-      const body = await res.json()
-      if (!body.ok) throw new Error(body.error || 'Save failed')
+      const ct = res.headers.get('content-type') || ''
+      let body
+      if (ct.includes('application/json')) {
+        body = await res.json()
+        if (!body.ok) throw new Error(body.error || 'Save failed')
+      } else {
+        const text = await res.text().catch(() => '')
+        throw new Error('Non-JSON response from API: ' + (text || res.statusText || res.status))
+      }
       // notify other parts of the app to reload questions
       try { window.dispatchEvent(new Event('questionsUpdated')) } catch (e) {}
       alert('Salvat cu succes')
     } catch (err) {
-      alert('Eroare la salvare: ' + err.message)
+      alert('Eroare la salvare: ' + err.message + '\n\nDacă rulezi local, API-ul serverless (/api/questions) nu este disponibil în dev.\nPe Vercel, asigură-te că ai setat variabila GITHUB_TOKEN pentru commit în repo.')
     } finally {
       setSaving(false)
     }
