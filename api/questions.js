@@ -22,6 +22,14 @@ async function commitToGitHub(questions, { owner, repo, branch, token }) {
   const apiBase = `https://api.github.com/repos/${owner}/${repo}/contents/${pathOnRepo}`
 
   // get current file to obtain sha (if exists)
+  // quick repo access check to give clearer errors for 404/403 (token/permissions problems)
+  const repoApi = `https://api.github.com/repos/${owner}/${repo}`
+  const repoRes = await doFetch(repoApi, { headers: { Authorization: `Bearer ${token}`, 'User-Agent': 'zbirTaxi-admin' } })
+  if (!repoRes.ok) {
+    const txt = await repoRes.text()
+    throw new Error(`Cannot access repo ${owner}/${repo}: ${repoRes.status} ${txt}`)
+  }
+
   const getRes = await doFetch(apiBase, { headers: { Authorization: `Bearer ${token}`, 'User-Agent': 'zbirTaxi-admin' } })
   let sha
   if (getRes.status === 200) {
