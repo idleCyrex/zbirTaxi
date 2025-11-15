@@ -4,10 +4,22 @@
     "prompt": "Care este culoarea cerului într-o zi senină?",
     "difficulty": "easy",
     "answers": [
-      { "text": "Albastru", "correct": true },
-      { "text": "Verde", "correct": false },
-      { "text": "Roșu", "correct": false },
-      { "text": "Negru", "correct": false }
+      {
+        "text": "Albastruu",
+        "correct": true
+      },
+      {
+        "text": "Verde",
+        "correct": false
+      },
+      {
+        "text": "Roșu",
+        "correct": false
+      },
+      {
+        "text": "Negru",
+        "correct": false
+      }
     ]
   },
   {
@@ -15,10 +27,22 @@
     "prompt": "Câte roți are, în mod normal, o mașină?",
     "difficulty": "easy",
     "answers": [
-      { "text": "4", "correct": true },
-      { "text": "3", "correct": false },
-      { "text": "2", "correct": false },
-      { "text": "6", "correct": false }
+      {
+        "text": "4",
+        "correct": true
+      },
+      {
+        "text": "3",
+        "correct": false
+      },
+      {
+        "text": "2",
+        "correct": false
+      },
+      {
+        "text": "6",
+        "correct": false
+      }
     ]
   },
   {
@@ -26,10 +50,22 @@
     "prompt": "Ce aliment este făcut din lapte?",
     "difficulty": "easy",
     "answers": [
-      { "text": "Brânză", "correct": true },
-      { "text": "Pâine", "correct": false },
-      { "text": "Orez", "correct": false },
-      { "text": "Cartof", "correct": false }
+      {
+        "text": "Brânză",
+        "correct": true
+      },
+      {
+        "text": "Pâine",
+        "correct": false
+      },
+      {
+        "text": "Orez",
+        "correct": false
+      },
+      {
+        "text": "Cartof",
+        "correct": false
+      }
     ]
   },
   {
@@ -37,10 +73,22 @@
     "prompt": "Care este unitatea de măsură pentru frecvență?",
     "difficulty": "medium",
     "answers": [
-      { "text": "Hertz", "correct": true },
-      { "text": "Pascal", "correct": false },
-      { "text": "Newton", "correct": false },
-      { "text": "Watt", "correct": false }
+      {
+        "text": "Hertz",
+        "correct": true
+      },
+      {
+        "text": "Pascal",
+        "correct": false
+      },
+      {
+        "text": "Newton",
+        "correct": false
+      },
+      {
+        "text": "Watt",
+        "correct": false
+      }
     ]
   },
   {
@@ -48,10 +96,22 @@
     "prompt": "Cine a scris Romeo și Julieta?",
     "difficulty": "medium",
     "answers": [
-      { "text": "William Shakespeare", "correct": true },
-      { "text": "Dostoievski", "correct": false },
-      { "text": "Homer", "correct": false },
-      { "text": "Miguel de Cervantes", "correct": false }
+      {
+        "text": "William Shakespeare",
+        "correct": true
+      },
+      {
+        "text": "Dostoievski",
+        "correct": false
+      },
+      {
+        "text": "Homer",
+        "correct": false
+      },
+      {
+        "text": "Miguel de Cervantes",
+        "correct": false
+      }
     ]
   },
   {
@@ -59,10 +119,22 @@
     "prompt": "Care dintre următoarele este o planetă din sistemul nostru solar?",
     "difficulty": "medium",
     "answers": [
-      { "text": "Marte", "correct": true },
-      { "text": "Vulcan", "correct": false },
-      { "text": "Krypton", "correct": false },
-      { "text": "Pandora", "correct": false }
+      {
+        "text": "Marte",
+        "correct": true
+      },
+      {
+        "text": "Vulcan",
+        "correct": false
+      },
+      {
+        "text": "Krypton",
+        "correct": false
+      },
+      {
+        "text": "Pandora",
+        "correct": false
+      }
     ]
   },
   {
@@ -70,10 +142,22 @@
     "prompt": "Ce gaz este principalul responsabil pentru efectul de seră?",
     "difficulty": "hard",
     "answers": [
-      { "text": "Dioxid de carbon (CO₂)", "correct": true },
-      { "text": "Oxigen (O₂)", "correct": false },
-      { "text": "Azot (N₂)", "correct": false },
-      { "text": "Heliu (He)", "correct": false }
+      {
+        "text": "Dioxid de carbon (CO₂)",
+        "correct": true
+      },
+      {
+        "text": "Oxigen (O₂)",
+        "correct": false
+      },
+      {
+        "text": "Azot (N₂)",
+        "correct": false
+      },
+      {
+        "text": "Heliu (He)",
+        "correct": false
+      }
     ]
   },
   {
@@ -81,10 +165,22 @@
     "prompt": "În ce an a căzut Zidul Berlinului?",
     "difficulty": "hard",
     "answers": [
-      { "text": "1989", "correct": true },
-      { "text": "1979", "correct": false },
-      { "text": "1999", "correct": false },
-      { "text": "1969", "correct": false }
+      {
+        "text": "1989",
+        "correct": true
+      },
+      {
+        "text": "1979",
+        "correct": false
+      },
+      {
+        "text": "1999",
+        "correct": false
+      },
+      {
+        "text": "1969",
+        "correct": false
+      }
     ]
   },
   {
@@ -92,10 +188,22 @@
     "prompt": "Care este valoarea aproximativă a constantei gravitaționale G în SI? (ordine de mărime)",
     "difficulty": "very-hard",
     "answers": [
-      { "text": "6.67×10⁻¹¹ N·m²/kg²", "correct": true },
-      { "text": "9.81 N/kg", "correct": false },
-      { "text": "3.00×10⁸ m/s", "correct": false },
-      { "text": "1.60×10⁻¹⁹ C", "correct": false }
+      {
+        "text": "6.67×10⁻¹¹ N·m²/kg²",
+        "correct": true
+      },
+      {
+        "text": "9.81 N/kg",
+        "correct": false
+      },
+      {
+        "text": "3.00×10⁸ m/s",
+        "correct": false
+      },
+      {
+        "text": "1.60×10⁻¹⁹ C",
+        "correct": false
+      }
     ]
   },
   {
@@ -103,10 +211,22 @@
     "prompt": "Ce limbaj de programare a influențat direct designul limbajului Rust?",
     "difficulty": "very-hard",
     "answers": [
-      { "text": "C și C++ (familia)", "correct": true },
-      { "text": "COBOL", "correct": false },
-      { "text": "Fortran", "correct": false },
-      { "text": "BASIC", "correct": false }
+      {
+        "text": "C și C++ (familia)",
+        "correct": true
+      },
+      {
+        "text": "COBOL",
+        "correct": false
+      },
+      {
+        "text": "Fortran",
+        "correct": false
+      },
+      {
+        "text": "BASIC",
+        "correct": false
+      }
     ]
   }
 ]
