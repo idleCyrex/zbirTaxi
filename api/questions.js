@@ -1,5 +1,6 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
+
 // Use global fetch when available (Node 18+/Vercel). Fall back to importing node-fetch dynamically.
 async function doFetch(...args) {
   if (typeof globalThis.fetch === 'function') {
@@ -12,15 +13,8 @@ async function doFetch(...args) {
 const DATA_PATH = path.join(process.cwd(), 'src', 'data', 'questions.json')
 
 function readQuestionsSync() {
-  // try require first (bundlers/serverless may include it), otherwise read from disk
-  try {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    const data = require(DATA_PATH)
-    return data
-  } catch (e) {
-    const raw = fs.readFileSync(DATA_PATH, 'utf8')
-    return JSON.parse(raw)
-  }
+  const raw = fs.readFileSync(DATA_PATH, 'utf8')
+  return JSON.parse(raw)
 }
 
 async function commitToGitHub(questions, { owner, repo, branch, token }) {
@@ -53,7 +47,7 @@ async function commitToGitHub(questions, { owner, repo, branch, token }) {
   return await putRes.json()
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       const questions = readQuestionsSync()
