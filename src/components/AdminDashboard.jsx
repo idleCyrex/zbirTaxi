@@ -1,132 +1,228 @@
-import { useEffect, useState } from 'react'
-import localQuestions from '../data/questions.js'
+import { useEffect, useState } from "react";
+import localQuestions from "../data/questions.js";
 
 export default function AdminDashboard() {
-  const [questions, setQuestions] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [saving, setSaving] = useState(false)
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     async function load() {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
       try {
-        const res = await fetch('/api/questions')
-        const ct = res.headers.get('content-type') || ''
-        if (res.ok && ct.includes('application/json')) {
-          const body = await res.json()
-          if (!body.ok) throw new Error(body.error || 'Failed to load')
-          setQuestions(body.questions)
+        const res = await fetch("/api/questions");
+        const ct = res.headers.get("content-type") || "";
+        if (res.ok && ct.includes("application/json")) {
+          const body = await res.json();
+          if (!body.ok) throw new Error(body.error || "Failed to load");
+          setQuestions(body.questions);
         } else {
-          // API not available (dev) or returned non-json — fallback to local file
-          const text = await res.text().catch(() => '')
-          setQuestions(localQuestions)
-          setError('API unavailable or returned non-JSON. Falling back to local questions. (' + (text || 'no response') + ')')
+          const text = await res.text().catch(() => "");
+          setQuestions(localQuestions);
+          setError(
+            "API unavailable or returned non-JSON. Falling back to local questions. (" +
+              (text || "no response") +
+              ")"
+          );
         }
       } catch (err) {
         // network error or other
-        setQuestions(localQuestions)
-        setError('Could not reach /api/questions — using local questions. ' + String(err))
+        setQuestions(localQuestions);
+        setError(
+          "Could not reach /api/questions — using local questions. " +
+            String(err)
+        );
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
-    load()
-  }, [])
+    load();
+  }, []);
 
   function updateQuestion(idx, patch) {
-    setQuestions((q) => q.map((item, i) => (i === idx ? { ...item, ...patch } : item)))
+    setQuestions((q) =>
+      q.map((item, i) => (i === idx ? { ...item, ...patch } : item))
+    );
   }
 
   function updateAnswer(qIdx, aIdx, patch) {
-    setQuestions((q) => q.map((item, i) => {
-      if (i !== qIdx) return item
-      const answers = item.answers.map((a, j) => (j === aIdx ? { ...a, ...patch } : a))
-      return { ...item, answers }
-    }))
+    setQuestions((q) =>
+      q.map((item, i) => {
+        if (i !== qIdx) return item;
+        const answers = item.answers.map((a, j) =>
+          j === aIdx ? { ...a, ...patch } : a
+        );
+        return { ...item, answers };
+      })
+    );
   }
 
   function setCorrectAnswer(qIdx, aIdx) {
-    setQuestions((q) => q.map((item, i) => {
-      if (i !== qIdx) return item
-      const answers = item.answers.map((a, j) => ({ ...a, correct: j === aIdx }))
-      return { ...item, answers }
-    }))
+    setQuestions((q) =>
+      q.map((item, i) => {
+        if (i !== qIdx) return item;
+        const answers = item.answers.map((a, j) => ({
+          ...a,
+          correct: j === aIdx,
+        }));
+        return { ...item, answers };
+      })
+    );
   }
 
   function addQuestion() {
-    setQuestions((q) => [...q, { id: `q-${Date.now()}`, prompt: 'New question', difficulty: 'easy', answers: [{ text: 'A', correct: true }, { text: 'B', correct: false }, { text: 'C', correct: false }, { text: 'D', correct: false }] }])
+    setQuestions((q) => [
+      ...q,
+      {
+        id: `q-${Date.now()}`,
+        prompt: "New question",
+        difficulty: "easy",
+        answers: [
+          { text: "A", correct: true },
+          { text: "B", correct: false },
+          { text: "C", correct: false },
+          { text: "D", correct: false },
+        ],
+      },
+    ]);
   }
 
   function removeQuestion(idx) {
-    setQuestions((q) => q.filter((_, i) => i !== idx))
+    setQuestions((q) => q.filter((_, i) => i !== idx));
   }
 
   async function save() {
-    setSaving(true)
+    setSaving(true);
     try {
-      const res = await fetch('/api/questions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/questions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ questions }),
-      })
-      const ct = res.headers.get('content-type') || ''
-      let body
-      if (ct.includes('application/json')) {
-        body = await res.json()
-        if (!body.ok) throw new Error(body.error || 'Save failed')
+      });
+      const ct = res.headers.get("content-type") || "";
+      let body;
+      if (ct.includes("application/json")) {
+        body = await res.json();
+        if (!body.ok) throw new Error(body.error || "Save failed");
       } else {
-        const text = await res.text().catch(() => '')
-        throw new Error('Non-JSON response from API: ' + (text || res.statusText || res.status))
+        const text = await res.text().catch(() => "");
+        throw new Error(
+          "Non-JSON response from API: " +
+            (text || res.statusText || res.status)
+        );
       }
-      // notify other parts of the app to reload questions
-      try { window.dispatchEvent(new Event('questionsUpdated')) } catch (e) {}
-      alert('Salvat cu succes')
+      try {
+        window.dispatchEvent(new Event("questionsUpdated"));
+      } catch (e) {}
+      alert("Salvat cu succes");
     } catch (err) {
-      alert('Eroare la salvare: ' + err.message + '\n\nDacă rulezi local, API-ul serverless (/api/questions) nu este disponibil în dev.\nPe Vercel, asigură-te că ai setat variabila GITHUB_TOKEN pentru commit în repo.')
+      alert(
+        "Eroare la salvare: " +
+          err.message +
+          "\n\nDacă rulezi local, API-ul serverless (/api/questions) nu este disponibil în dev.\nPe Vercel, asigură-te că ai setat variabila GITHUB_TOKEN pentru commit în repo."
+      );
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
   }
 
-  if (loading) return <div className="admin-root">Încărcare întrebări…</div>
-  if (error) return <div className="admin-root">Eroare: {error}</div>
+  if (loading) return <div className="admin-root">Încărcare întrebări…</div>;
+  if (error) return <div className="admin-root">Eroare: {error}</div>;
 
   return (
     <div className="admin-root">
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          alignItems: "center",
+          marginBottom: 12,
+        }}
+      >
         <h2>Admin Dashboard - Întrebări</h2>
-        <button onClick={addQuestion} className="btn">Adaugă întrebare</button>
-        <button onClick={save} className="btn" disabled={saving}>{saving ? 'Se salvează...' : 'Salvează'}</button>
+        <button onClick={addQuestion} className="btn">
+          Adaugă întrebare
+        </button>
+        <button onClick={save} className="btn" disabled={saving}>
+          {saving ? "Se salvează..." : "Salvează"}
+        </button>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
         {questions.map((q, qi) => (
-          <div key={q.id} style={{ border: '1px solid rgba(255,255,255,0.06)', padding: 12, borderRadius: 8 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <input style={{ flex: 1, marginRight: 12 }} value={q.prompt} onChange={(e) => updateQuestion(qi, { prompt: e.target.value })} />
-              <select value={q.difficulty} onChange={(e) => updateQuestion(qi, { difficulty: e.target.value })}>
+          <div
+            key={q.id}
+            style={{
+              border: "1px solid rgba(255,255,255,0.06)",
+              padding: 12,
+              borderRadius: 8,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <input
+                style={{ flex: 1, marginRight: 12 }}
+                value={q.prompt}
+                onChange={(e) => updateQuestion(qi, { prompt: e.target.value })}
+              />
+              <select
+                value={q.difficulty}
+                onChange={(e) =>
+                  updateQuestion(qi, { difficulty: e.target.value })
+                }
+              >
                 <option value="easy">easy</option>
                 <option value="medium">medium</option>
                 <option value="hard">hard</option>
                 <option value="very-hard">very-hard</option>
               </select>
-              <button style={{ marginLeft: 12 }} onClick={() => removeQuestion(qi)}>Șterge</button>
+              <button
+                style={{ marginLeft: 12 }}
+                onClick={() => removeQuestion(qi)}
+              >
+                Șterge
+              </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 10 }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 8,
+                marginTop: 10,
+              }}
+            >
               {q.answers.map((a, ai) => (
-                <div key={ai} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                  <input type="radio" name={`correct-${q.id}`} checked={a.correct} onChange={() => setCorrectAnswer(qi, ai)} />
-                  <input style={{ flex: 1 }} value={a.text} onChange={(e) => updateAnswer(qi, ai, { text: e.target.value })} />
+                <div
+                  key={ai}
+                  style={{ display: "flex", gap: 8, alignItems: "center" }}
+                >
+                  <input
+                    type="radio"
+                    name={`correct-${q.id}`}
+                    checked={a.correct}
+                    onChange={() => setCorrectAnswer(qi, ai)}
+                  />
+                  <input
+                    style={{ flex: 1 }}
+                    value={a.text}
+                    onChange={(e) =>
+                      updateAnswer(qi, ai, { text: e.target.value })
+                    }
+                  />
                 </div>
               ))}
             </div>
           </div>
         ))}
       </div>
-
     </div>
-  )
+  );
 }
