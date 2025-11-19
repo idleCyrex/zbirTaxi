@@ -52,11 +52,11 @@
     "answers": [
       {
         "text": "Brânză",
-        "correct": true
+        "correct": false
       },
       {
         "text": "Pâine",
-        "correct": false
+        "correct": true
       },
       {
         "text": "Orez",
@@ -75,11 +75,11 @@
     "answers": [
       {
         "text": "Hertz",
-        "correct": true
+        "correct": false
       },
       {
         "text": "Pascal",
-        "correct": false
+        "correct": true
       },
       {
         "text": "Newton",
@@ -98,7 +98,7 @@
     "answers": [
       {
         "text": "William Shakespeare",
-        "correct": true
+        "correct": false
       },
       {
         "text": "Dostoievski",
@@ -110,7 +110,7 @@
       },
       {
         "text": "Miguel de Cervantes",
-        "correct": false
+        "correct": true
       }
     ]
   },
@@ -121,11 +121,11 @@
     "answers": [
       {
         "text": "Marte",
-        "correct": true
+        "correct": false
       },
       {
         "text": "Vulcan",
-        "correct": false
+        "correct": true
       },
       {
         "text": "Krypton",
@@ -144,11 +144,11 @@
     "answers": [
       {
         "text": "Dioxid de carbon (CO₂)",
-        "correct": true
+        "correct": false
       },
       {
         "text": "Oxigen (O₂)",
-        "correct": false
+        "correct": true
       },
       {
         "text": "Azot (N₂)",
@@ -167,11 +167,11 @@
     "answers": [
       {
         "text": "1989",
-        "correct": true
+        "correct": false
       },
       {
         "text": "1979",
-        "correct": false
+        "correct": true
       },
       {
         "text": "1999",
@@ -190,11 +190,11 @@
     "answers": [
       {
         "text": "6.67×10⁻¹¹ N·m²/kg²",
-        "correct": true
+        "correct": false
       },
       {
         "text": "9.81 N/kg",
-        "correct": false
+        "correct": true
       },
       {
         "text": "3.00×10⁸ m/s",
@@ -213,11 +213,11 @@
     "answers": [
       {
         "text": "C și C++ (familia)",
-        "correct": true
+        "correct": false
       },
       {
         "text": "COBOL",
-        "correct": false
+        "correct": true
       },
       {
         "text": "Fortran",
