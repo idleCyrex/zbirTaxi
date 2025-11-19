@@ -29,7 +29,7 @@
     "answers": [
       {
         "text": "4",
-        "correct": true
+        "correct": false
       },
       {
         "text": "3",
@@ -41,7 +41,7 @@
       },
       {
         "text": "6",
-        "correct": false
+        "correct": true
       }
     ]
   },
